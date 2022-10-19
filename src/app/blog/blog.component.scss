@@ -1,0 +1,493 @@
+@import "../shared/styles/variables";
+
+.back-black {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.301);
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.sign-in-form,
+.sign-up-form,
+.add-post-form,
+.edit-post-form {
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-evenly;
+  align-items: center;
+  min-width: 450px;
+  min-height: 310px;
+  width: 40%;
+  height: 55%;
+  background-color: white;
+  border: 1px solid gray;
+  border-radius: 5px;
+
+  form {
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s;
+  }
+  &__block1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    border-bottom: 1px solid lightgray;
+    padding: 0 20px;
+    &__header {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    .btn-close-x {
+      background: none;
+      border: none;
+    }
+  }
+  &__block2 {
+    min-height: 60%;
+    height: fit-content;
+    padding: 20px;
+    border-bottom: 1px solid lightgray;
+  }
+  &__block3 {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 20px;
+    width: 100%;
+    height: 20%;
+    &__btn-close,
+    &__btn-submit {
+      color: white;
+    }
+    &__btn-close {
+      background-color: $gray;
+      &:hover {
+        background-color: $grayHover;
+      }
+    }
+    &__btn-submit {
+      background-color: $green;
+      &:hover {
+        background-color: $greenHover;
+      }
+    }
+  }
+}
+.sign-in-form {
+  height: fit-content;
+}
+
+.sign-up-form {
+  min-height: 67%;
+  height: fit-content;
+  max-height: 97vh;
+  overflow: auto;
+  &__block1 {
+    height: 15%;
+  }
+  &__block2 {
+    height: 70%;
+  }
+  &__block3 {
+    height: 15%;
+    &__btn-submit {
+      background-color: $singUpBlue;
+    }
+  }
+}
+.add-post-form,
+.edit-post-form {
+  min-height: 310px;
+  width: 40%;
+  height: 72%;
+  &__block1 {
+    width: 100%;
+    height: 15%;
+  }
+  &__block2 {
+    width: 100%;
+    height: 70%;
+    .textarea {
+      border-radius: 5px;
+      height: 150px;
+      resize: none;
+      border: 1px solid $lightgray;
+    }
+  }
+  &__block3 {
+    width: 100%;
+    height: 15%;
+    &__btn-post {
+      cursor: pointer;
+      background-color: $green;
+      color: white;
+      &:hover {
+        background-color: $greenHover;
+      }
+    }
+  }
+}
+.header {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  width: 100vw;
+  min-height: 60px;
+  height: 10vh;
+  background-color: black;
+  &__name {
+    margin-left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    min-width: max-content;
+    width: 10%;
+    color: white;
+    font-size: 24px;
+  }
+  &__greetings {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+    align-items: center;
+    min-width: 150px;
+    width: max-content;
+    height: 100%;
+    &__user-name {
+      cursor: default;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 0 7px 0 7px;
+      min-width: 150px;
+      width: fit-content;
+      height: 40px;
+      font-weight: bold;
+      background-color: $orange;
+      color: white;
+      font-size: 24px;
+    }
+  }
+  &__action-block {
+    display: block;
+    width: max-content;
+    padding-right: 2%;
+    .sign-in {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: center;
+      width: max-content;
+      height: 100%;
+      .btn-sign-in,
+      .btn-sign-up {
+        display: block;
+        width: 80px;
+        height: 40px;
+        background: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .btn-sign-in {
+        border-radius: 7px 0 0 7px;
+        border: 2px solid $singInGreen;
+        color: $singInGreen;
+        &:hover {
+          background-color: $singInGreen;
+          color: white;
+          text-shadow: 1px 1px 4px black;
+        }
+        &:active {
+          box-shadow: 0px 0px 7px 1px $singInGreen;
+          background: none;
+          color: $singInGreen;
+        }
+      }
+      .btn-sign-up {
+        border-radius: 0 7px 7px 0;
+        border: 2px solid $singUpBlue;
+        color: $singUpBlue;
+        &:hover {
+          background-color: $singUpBlue;
+          color: white;
+          text-shadow: 1px 1px 4px black;
+        }
+        &:active {
+          box-shadow: 0px 0px 7px 1px $singUpBlue;
+          background: none;
+          color: $singUpBlue;
+        }
+      }
+    }
+    .sign-out {
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-around;
+      align-items: center;
+      width: max-content;
+      height: 100%;
+      .btn-add-post,
+      .btn-sign-out {
+        display: block;
+        width: 80px;
+        height: 40px;
+        background: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .btn-add-post {
+        border-radius: 7px 0 0 7px;
+        border: 2px solid $singInGreen;
+        color: $singInGreen;
+        &:hover {
+          background-color: $singInGreen;
+          color: white;
+          text-shadow: 1px 1px 4px black;
+        }
+        &:active {
+          box-shadow: 0px 0px 7px 1px $singInGreen;
+          background: none;
+          color: $singInGreen;
+        }
+      }
+      .btn-sign-out {
+        border-radius: 0 7px 7px 0;
+        border: 2px solid $orange;
+        color: $orange;
+
+        &:hover {
+          background-color: $orange;
+          color: white;
+          text-shadow: 1px 1px 4px black;
+        }
+
+        &:active {
+          box-shadow: 0px 0px 7px 1px $orange;
+          background: none;
+          color: $orange;
+        }
+      }
+    }
+  }
+}
+.d-a-sign {
+  margin-right: auto;
+}
+
+.a-sign {
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    color: lightblue;
+    text-decoration: underline;
+  }
+}
+
+.main-block {
+  display: flex;
+  flex-flow: column;
+  justify-content: start;
+  align-items: center;
+  width: 100vw;
+  height: 90vh;
+  overflow-y: auto;
+  &__post {
+    display: flex;
+    flex-flow: row;
+    width: 80%;
+    height: fit-content;
+    border-radius: 5px;
+    border: 1px solid grey;
+    margin: 1% 0 1% 0;
+    .all-info {
+      display: flex;
+      flex-flow: column nowrap;
+      justify-content: flex-start;
+      align-items: flex-start;
+      width: 100%;
+      min-height: 100%;
+      height: fit-content;
+      padding: 10px;
+      &__posted-by,
+      &__title,
+      &__text {
+        display: block;
+        width: 100%;
+        height: fit-content;
+        margin: 10px;
+        color: $lightgray;
+        font-size: 14.5px;
+        margin: 0 0 10px 10px;
+      }
+      &__title {
+        color: black;
+      }
+      &__text {
+        font-weight: normal;
+        height: max-content;
+        color: black;
+      }
+    }
+  }
+  .action-box {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: 100%;
+    height: 30%;
+    color: $lightgray;
+    &__time {
+      display: flex;
+      flex-flow: row;
+      justify-content: flex-start;
+      align-items: baseline;
+      width: 100%;
+      height: 100%;
+      margin: 10px 0 0 10px;
+
+      span {
+        padding: 0;
+        margin: 0;
+      }
+      &__time-date {
+        display: block;
+        width: max-content;
+        height: 15px;
+        font-size: 13.5px;
+      }
+    }
+    &__buttons {
+      display: flex;
+      flex-flow: row;
+      justify-content: flex-start;
+      align-items: baseline;
+      width: 100%;
+      height: 45%;
+      margin: 10px;
+      .btn-edit,
+      .btn-delete {
+        display: block;
+        width: 80px;
+        height: 30px;
+        background: none;
+        font-size: 14px;
+        cursor: pointer;
+      }
+      .btn-edit {
+        width: 85px;
+        border-radius: 7px 0 0 7px;
+        border: none;
+        background-color: $orange;
+        &:hover {
+          background-color: $orangeHover;
+        }
+        &:active {
+          outline: 2px solid $orangeActive;
+          background-color: $orange;
+        }
+      }
+
+      .btn-delete {
+        border-radius: 0 7px 7px 0;
+        border: none;
+        background-color: $redone;
+        color: white;
+        &:hover {
+          background-color: $redoneHover;
+        }
+
+        &:active {
+          outline: 2px solid $redoneActive;
+          background-color: $redone;
+        }
+      }
+    }
+  }
+  .h100 {
+    height: 100%;
+  }
+}
+input {
+  &:focus {
+    outline: none;
+  }
+}
+input.ng-dirty.ng-invalid:not(.non-check) {
+  outline: 2px solid red;
+}
+input.ng-dirty.ng-valid:not(.non-check) {
+  outline: 2px solid greenyellow;
+}
+
+.tag1,
+.tag2,
+.tag3,
+.tag4,
+.tag5,
+.tag6,
+.tag7 {
+  width: 100%;
+  height: 30px;
+  &::after {
+    box-sizing: content-box;
+    content: "пароль повинен містити: хоч одну цифру, велику букву, малу букву, лише латинські букви";
+    text-align: center;
+    display: block;
+    width: 100%;
+    height: fit-content;
+    background-color: rgba(255, 0, 0, 0.5);
+    border-radius: 10px;
+    color: white;
+    margin: 20px 0;
+    position: relative;
+    bottom: 10px;
+    left: 0;
+    padding: 5px;
+  }
+}
+.tag2 {
+  &::after {
+    content: "паролі мають бути ідентичними!";
+  }
+}
+.tag3 {
+  &::after {
+    content: "Вкажіть Вашу стать";
+  }
+}
+.tag4 {
+  &::after {
+    content: "Заповніть будь-ласка поля";
+  }
+}
+.tag5 {
+  &::after {
+    content: "Дані введено не вірно";
+  }
+}
+.tag6 {
+  &::after {
+    content: "ім'я має містити тільки латинські букви";
+  }
+}
+.tag7 {
+  &::after {
+    content: "email має містити символ @ та .";
+  }
+}

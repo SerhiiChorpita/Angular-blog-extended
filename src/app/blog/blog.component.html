@@ -1,0 +1,232 @@
+<div class="header">
+    <div class="header__greetings">
+        <ng-container *ngIf="userName">
+            <div class="header__greetings__user-name">Hello, {{ userName }}</div>
+        </ng-container>
+    </div>
+    <div class="header__name"><span>Angular blog</span></div>
+    <div class="header__action-block">
+        <div class="sign-in" *ngIf="signInCheck">
+            <button class="btn-sign-in" (click)="signInVis = true">Увійти</button>
+            <button class="btn-sign-up" (click)="signUpVis = true">Реєстрація</button>
+        </div>
+        <div class="sign-out" *ngIf="!signInCheck">
+            <!-- <button class="btn-add-post" (click)="addVis = true">Add post</button> -->
+            <button class="btn-sign-out" (click)="signInCheck = true; userName = ''">
+                Вийти
+            </button>
+        </div>
+    </div>
+</div>
+<div class="main-block">
+    <div class="container my-3" style="
+    width: 82%;
+">
+        <form #addingPost="ngForm" (ngSubmit)="addPost(addingPost)">
+            <div class="mb-3">
+                <label for="title" class="form-label">Тема допису:</label>
+                <input type="text" class="form-control" id="title" name="addTitle" ngModel required
+                    [disabled]="!userName">
+            </div>
+            <div class="d-flex flex-column mb-3">
+                <span>Текст допису:</span>
+                <textarea name="textare1a" class="form-control textarea" name="addText" ngModel required
+                    [disabled]="!userName"></textarea>
+            </div>
+            <button type="submit" class="btn add-post-form__block3__btn-post"
+                [disabled]="addingPost.invalid || !userName">
+                Розмістити
+            </button>
+        </form>
+    </div>
+    <ng-container *ngFor="let user of allPosts; index as i">
+        <div class="main-block__post">
+            <div class="all-info">
+                <div class="container">
+                    <div class="all-info__title">
+                        <h3>{{ user.title }}</h3>
+                    </div>
+                    <ng-container *ngIf="(user.postedBy === 'admin' && userName !== 'admin') || !userName">
+                        <div class="action-box">
+                            <div class="action-box__time h100">
+                                <span>Допис розміщено о:</span>
+                                <div class="action-box__time__time-date">{{ user.timeDate }}</div>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="user.postedBy === 'admin' && userName === 'admin'">
+                        <div class="action-box">
+                            <div class="action-box__time h100">
+                                <span>Допис розміщено о:</span>
+                                <div class="action-box__time__time-date">{{ user.timeDate }}</div>
+                            </div>
+                            <div class="action-box__buttons">
+                                <button class="btn-edit" (click)="editVis = true; editPost(i)">
+                                    Редагувати
+                                </button>
+                                <button class="btn-delete" (click)="deletePost(i)">Видалити</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <ng-container *ngIf="
+                          (user.postedBy !== 'admin' && userName) ||
+                          (user.postedBy !== 'admin' && userName === 'admin')
+                        ">
+                        <div class="action-box">
+                            <div class="action-box__time">
+                                <div class="action-box__time__img"></div>
+                                <div class="action-box__time__time-date">{{ user.timeDate }}</div>
+                            </div>
+                            <div class="action-box__buttons">
+                                <button class="btn-edit" (click)="editVis = true; editPost(i)">
+                                    Редагувати
+                                </button>
+                                <button class="btn-delete" (click)="deletePost(i)">Видалити</button>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="all-info__posted-by">Допис розміщено користувачем: {{ user.postedBy }}</div>
+                </div>
+                <div class="container">
+                    <div class="all-info__text">{{ user.text }}</div>
+                </div>
+            </div>
+
+
+
+        </div>
+    </ng-container>
+</div>
+<div class="back-black" [style]="signInVis || signUpVis || addVis || editVis ? visY : visN">
+    <ng-container *ngIf="signInVis">
+        <div class="sign-in-form">
+            <form #signIn="ngForm" (submit)="checkSignIn(signIn)">
+                <div class="sign-in-form__block1">
+                    <div class="sign-in-form__block1__header">Увійти</div>
+                    <button class="btn-close-x" (click)="signInVis = false; signIn.reset();setToZeroSignIn()">
+                        x
+                    </button>
+                </div>
+                <div class="sign-in-form__block2">
+                    <div [ngClass]="{'tag4':signInNotValid}"></div>
+                    <div [ngClass]="{'tag5':invalidUser}"></div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Ваш email:</label>
+                        <input type="email" class="non-check form-control" id="email" aria-describedby="emailHelp"
+                            name="signInEmail" (input)="setToZeroSignIn()" ngModel required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pass3" class="form-label">Пароль:</label>
+                        <input type="password" class="non-check form-control" id="pass3" name="signInPass"
+                            autocomplete="off" (input)="setToZeroSignIn()" ngModel required>
+                    </div>
+                </div>
+                <div class="sign-in-form__block3">
+                    <div class="m-3 d-a-sign">
+                        <a class="a-sign" (click)="signUpVis = true; signInVis = false;setToZeroSignIn()">Реєстрація</a>
+                    </div>
+                    <button type="button" class="btn sign-in-form__block3__btn-close me-2"
+                        (click)="signInVis = false; signIn.reset(); signInNotValid = false">
+                        Закрити
+                    </button>
+                    <button type="submit" class="btn sign-in-form__block3__btn-submit">
+                        Увійти
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="signUpVis">
+        <div class="sign-up-form">
+            <form #newSignUp="ngForm" (ngSubmit)="updateSignUp(newSignUp)">
+                <div class="sign-up-form__block1">
+                    <div class="sign-in-form__block1__header">Реєстрація</div>
+                    <button class="btn-close-x" (click)="signUpVis = false">
+                        x
+                    </button>
+                </div>
+                <div class="sign-up-form__block2">
+                    <div class="mb-3">
+                        <label for="userName" class="form-label" [ngClass]="{'tag6':userNameReg}">Ваше ім'я:</label>
+                        <input type="text" class="form-control" id="userName" name="signUpUserName"
+                            pattern="[a-zA-Z].{0,30}" ngModel required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="email" class="form-label" [ngClass]="{'tag7':userEmailReg}">Ваш email:</label>
+                        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                            name="signUpEmail" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" ngModel required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="pass1" class="form-label" [ngClass]="{'tag1':passNotValid1}">Придумайте
+                            пароль:</label>
+                        <input (input)="checkPass(newSignUp, 'signUpPass')" type="password" class="form-control"
+                            id="pass1" name="signUpPass" pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$" ngModel
+                            required placeholder="мінімум 6 знаків" autocomplete="off">
+                    </div>
+                    <div class=" mb-3">
+                        <label for="pass2" class="form-label" [ngClass]="{'tag2':passNotValid2}">Повторіть
+                            пароль:</label>
+                        <input (input)="checkPass(newSignUp, 'signUpCheckPass')" type="password" class="form-control"
+                            id="pass2" name="signUpCheckPass" [pattern]="newSignUp.value.signUpPass" ngModel required
+                            placeholder="мінімум 6 знаків" autocomplete="off">
+                    </div>
+                    <div class="mb-3">
+                        <p>Вкажіть Вашу стать:</p>
+                        <div [ngClass]="{'tag3':genderNotValid}"> </div>
+                        <label class="me-2">
+                            <input type="radio" style="outline:none;" value="male" name="gender" ngModel selected>
+                            чоловіча
+                        </label>
+                        <label>
+                            <input type="radio" style="outline:none;" value="female" name="gender" ngModel>
+                            жіноча
+                        </label>
+                    </div>
+                </div>
+                <div class="sign-up-form__block3">
+                    <div class="m-3 d-a-sign">
+                        <a class="a-sign" (click)="signUpVis = false; signInVis = true">Увійти</a>
+                    </div>
+                    <button type="button" class="btn sign-up-form__block3__btn-close me-2"
+                        (click)="signUpVis = false; newSignUp.reset()">
+                        Закрити
+                    </button>
+                    <button type="submit" class="btn sign-up-form__block3__btn-submit">
+                        Зареєструватись
+                    </button>
+                </div>
+            </form>
+        </div>
+    </ng-container>
+    <ng-container *ngIf="editVis">
+        <div class="edit-post-form">
+            <div class="edit-post-form__block1">
+                <div class="sign-in-form__block1__header">Edit post</div>
+                <button class="btn-close-x" (click)="editVis = false">
+                    x
+                </button>
+            </div>
+            <div class="edit-post-form__block2">
+                <div class="mb-3">
+                    <label for="title" class="form-label">Title:</label>
+                    <input type="text" class="form-control" id="title" [(ngModel)]="editTitle"
+                        [ngModelOptions]="{ standalone: true }">
+                </div>
+                <div class="d-flex flex-column mb-3">
+                    <span>Text:</span>
+                    <textarea name="textare1a" class="form-control textarea" [(ngModel)]="editText"
+                        [ngModelOptions]="{ standalone: true }"></textarea>
+                </div>
+            </div>
+            <div class="edit-post-form__block3">
+                <button type="button" class="btn edit-post-form__block3__btn-close me-2" (click)="editVis = false">
+                    Close
+                </button>
+                <button type="button" class="btn edit-post-form__block3__btn-post"
+                    (click)="editVis = false; updatePost()">
+                    Edit post
+                </button>
+            </div>
+        </div>
+    </ng-container>
+</div>
