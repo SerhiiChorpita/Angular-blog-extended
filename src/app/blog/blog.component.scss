@@ -84,6 +84,7 @@
     }
   }
 }
+
 .sign-in-form {
   height: fit-content;
 }
@@ -106,6 +107,7 @@
     }
   }
 }
+
 .add-post-form,
 .edit-post-form {
   min-height: 310px;
@@ -136,8 +138,16 @@
         background-color: $greenHover;
       }
     }
+    &__btn-clear-all {
+      background-color: orange;
+      color: white;
+      &:hover {
+        background-color: rgba(255, 166, 0, 0.644);
+      }
+    }
   }
 }
+
 .header {
   display: flex;
   flex-flow: row nowrap;
@@ -284,6 +294,7 @@
     }
   }
 }
+
 .d-a-sign {
   margin-right: auto;
 }
@@ -323,6 +334,7 @@
       min-height: 100%;
       height: fit-content;
       padding: 10px;
+      box-shadow: 0px 3px 8px 0px lightgrey;
       &__posted-by,
       &__title,
       &__text {

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PostInfo, UserBase } from '../shared/blog-interface/blog.interface';
+import { LocalStorageService } from '../shared/services/local-storage.service';
 
 @Component({
   selector: 'app-blog',
@@ -12,7 +13,7 @@ export class BlogComponent implements OnInit {
   public newPost!: PostInfo;
 
   public userName!: string;
-  public signInCheck = true;
+  public signInCheck: boolean = true;
   public signInVis!: boolean;
   public signUpVis!: boolean;
   public addVis!: boolean;
@@ -36,32 +37,25 @@ export class BlogComponent implements OnInit {
   public signInNotValid: boolean = false;
   public invalidUser: boolean = false;
 
-
   public editTitle!: string;
   public editText!: string;
   public currId!: number;
 
+  public count: number = 0;
   public dateString: Date = new Date();
   public newDate: string = `${this.dateString.toLocaleTimeString([], {
     hour: '2-digit',
     minute: '2-digit',
   })}, ${this.dateString.toLocaleDateString()}`;
 
-  public visY = 'visibility: visible';
-  public visN = 'visibility: hidden';
+  public visY: string = 'visibility: visible';
+  public visN: string = 'visibility: hidden';
 
   public inpValue!: string;
 
-  public allPosts: Array<PostInfo> = [
-    {
-      title: 'Перший пост',
-      postedBy: 'admin',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat quas maxime expedita, a illo facere similique ad vitae quisquam nemo.',
-      timeDate: '17:16, 19.10.2022',
-    },
-  ];
+  public allPosts: Array<PostInfo> = [];
 
-  public allUsers: Array<UserBase> = [
+  private allUsers: Array<UserBase> = [
     {
       userName: 'admin',
       email: 'admin@gmail.com',
@@ -71,11 +65,21 @@ export class BlogComponent implements OnInit {
     },
   ];
 
-  constructor() { }
+  constructor(
+    private localStorage: LocalStorageService
+  ) { }
+
   ngOnInit(): void {
     setTimeout(() => {
       this.signInVis = true;
     }, 500);
+    this.updatePosts();
+  }
+
+  updatePosts(): void {
+    if (localStorage.length > 0) {
+      this.allPosts = JSON.parse(this.localStorage.getData('posts') as string)
+    }
   }
 
   checkSignIn(form: NgForm): void {
@@ -105,10 +109,12 @@ export class BlogComponent implements OnInit {
       });
     }
   }
+
   setToZeroSignIn(): void {
     this.invalidUser = false
     this.signInNotValid = false
   }
+
   checkPass(form: NgForm, value: string): void {
     let fc = form.control.controls;
 
@@ -130,8 +136,8 @@ export class BlogComponent implements OnInit {
 
   updateSignUp(form: NgForm): void {
     let fc = form.control.controls;
-
     let fv = form.value;
+
     this.genderNotValid = false;
 
     this.newUser = {
@@ -185,29 +191,54 @@ export class BlogComponent implements OnInit {
     }
   }
 
-  addPost(form: NgForm): void {
+  postsCount(value: boolean): void {
+    if (value) {
+      ++this.count;
+    } else if (!value && this.count > 1) {
+      --this.count;
+    }
+  }
+
+  addPost(post: NgForm): void {
     this.newPost = {
-      title: form.value.addTitle,
+      title: post.value.addTitle,
       postedBy: this.userName,
-      text: form.value.addText,
+      text: post.value.addText,
       timeDate: this.newDate,
+      count: this.count
     };
     this.allPosts.unshift(this.newPost);
-    form.reset();
+    this.localStorage.saveData('posts', JSON.stringify(this.allPosts))
+    post.reset();
   }
+
   editPost(index: number): void {
+    this.allPosts = JSON.parse(localStorage.getItem('posts') as string);
+
     this.editTitle = this.allPosts[index].title;
     this.editText = this.allPosts[index].text;
     this.currId = index;
   }
-  updatePost(): void {
+
+  savePostChanges(): void {
     this.allPosts[this.currId].title = this.editTitle;
     this.allPosts[this.currId].text = this.editText;
-  }
-  deletePost(index: number): void {
-    this.allPosts.splice(index, 1);
+    this.localStorage.saveData('posts', JSON.stringify(this.allPosts))
   }
 
+  deletePost(index: number): void {
+    this.allPosts = JSON.parse(localStorage.getItem('posts') as string);
+
+    this.allPosts.splice(index, 1);
+    this.localStorage.saveData('posts', JSON.stringify(this.allPosts))
+  }
+
+  clearStorage(): void {
+    if (confirm('Ви дійсно хочете видалити усі дописи ?')) {
+      this.localStorage.removeData('posts');
+      this.allPosts.splice(0, this.allPosts.length)
+    }
+  }
 }
 
 

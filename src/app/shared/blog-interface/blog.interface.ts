@@ -3,7 +3,9 @@ export interface PostInfo {
     postedBy: string;
     text: string;
     timeDate: string;
+    count?: number
 }
+
 export interface UserBase {
     userName: string;
     email: string;

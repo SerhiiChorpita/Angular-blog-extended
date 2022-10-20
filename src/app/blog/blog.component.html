@@ -4,14 +4,13 @@
             <div class="header__greetings__user-name">Hello, {{ userName }}</div>
         </ng-container>
     </div>
-    <div class="header__name"><span>Angular blog</span></div>
+    <div class="header__name"><span>Angular blog extension</span></div>
     <div class="header__action-block">
         <div class="sign-in" *ngIf="signInCheck">
             <button class="btn-sign-in" (click)="signInVis = true">Увійти</button>
             <button class="btn-sign-up" (click)="signUpVis = true">Реєстрація</button>
         </div>
         <div class="sign-out" *ngIf="!signInCheck">
-            <!-- <button class="btn-add-post" (click)="addVis = true">Add post</button> -->
             <button class="btn-sign-out" (click)="signInCheck = true; userName = ''">
                 Вийти
             </button>
@@ -19,10 +18,8 @@
     </div>
 </div>
 <div class="main-block">
-    <div class="container my-3" style="
-    width: 82%;
-">
-        <form #addingPost="ngForm" (ngSubmit)="addPost(addingPost)">
+    <div class="container my-3" style="width: 82%;">
+        <form #addingPost="ngForm" (ngSubmit)="postsCount(true); addPost(addingPost)">
             <div class="mb-3">
                 <label for="title" class="form-label">Тема допису:</label>
                 <input type="text" class="form-control" id="title" name="addTitle" ngModel required
@@ -33,10 +30,18 @@
                 <textarea name="textare1a" class="form-control textarea" name="addText" ngModel required
                     [disabled]="!userName"></textarea>
             </div>
-            <button type="submit" class="btn add-post-form__block3__btn-post"
-                [disabled]="addingPost.invalid || !userName">
-                Розмістити
-            </button>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn add-post-form__block3__btn-post"
+                    [disabled]="addingPost.invalid || !userName">
+                    Розмістити
+                </button>
+                <ng-container *ngIf="userName === 'admin'">
+                    <button type="button" (click)="clearStorage()"
+                        class="btn btn-warning add-post-form__block3__btn-clear-all">
+                        Очистити список
+                    </button>
+                </ng-container>
+            </div>
         </form>
     </div>
     <ng-container *ngFor="let user of allPosts; index as i">
@@ -54,7 +59,8 @@
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="user.postedBy === 'admin' && userName === 'admin'">
+                    <ng-container
+                        *ngIf="(user.postedBy === 'admin' && userName === 'admin') || (user.postedBy !== 'admin' && userName === 'admin')">
                         <div class="action-box">
                             <div class="action-box__time h100">
                                 <span>Допис розміщено о:</span>
@@ -64,24 +70,21 @@
                                 <button class="btn-edit" (click)="editVis = true; editPost(i)">
                                     Редагувати
                                 </button>
-                                <button class="btn-delete" (click)="deletePost(i)">Видалити</button>
+                                <button class="btn-delete" (click)="deletePost(i);postsCount(false)">Видалити</button>
                             </div>
                         </div>
                     </ng-container>
-                    <ng-container *ngIf="
-                          (user.postedBy !== 'admin' && userName) ||
-                          (user.postedBy !== 'admin' && userName === 'admin')
-                        ">
+                    <ng-container *ngIf="(user.postedBy !== 'admin' && userName  && userName !== 'admin')">
                         <div class="action-box">
                             <div class="action-box__time">
                                 <div class="action-box__time__img"></div>
                                 <div class="action-box__time__time-date">{{ user.timeDate }}</div>
                             </div>
                             <div class="action-box__buttons">
-                                <button class="btn-edit" (click)="editVis = true; editPost(i)">
+                                <button class="btn-edit" style="border-radius: 10px;"
+                                    (click)="editVis = true; editPost(i)">
                                     Редагувати
                                 </button>
-                                <button class="btn-delete" (click)="deletePost(i)">Видалити</button>
                             </div>
                         </div>
                     </ng-container>
@@ -91,9 +94,6 @@
                     <div class="all-info__text">{{ user.text }}</div>
                 </div>
             </div>
-
-
-
         </div>
     </ng-container>
 </div>
@@ -223,7 +223,7 @@
                     Close
                 </button>
                 <button type="button" class="btn edit-post-form__block3__btn-post"
-                    (click)="editVis = false; updatePost()">
+                    (click)="editVis = false; savePostChanges()">
                     Edit post
                 </button>
             </div>
