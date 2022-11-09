@@ -1,27 +1,15 @@
 # BlogPage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.4.
+Description: an application that has similar behavior to a blog site.
 
-## Development server
+  - manually created validation for fields;
+  - login for admin: email: admin@gmail.com; password:admin;
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+I used: Angular 2+, Bootstrap;
 
-## Code scaffolding
+Screenshot of the application:
+(registration)
+![registration](https://user-images.githubusercontent.com/96174218/200847924-5f389002-5ee1-4ade-87e6-f82bb8ed4f4e.png)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+(posts)
+![posts](https://user-images.githubusercontent.com/96174218/200847910-03d350db-aef0-4cc0-b970-aae32df24659.png)
