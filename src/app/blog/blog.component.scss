@@ -458,7 +458,7 @@ input.ng-dirty.ng-valid:not(.non-check) {
   height: 30px;
   &::after {
     box-sizing: content-box;
-    content: "пароль повинен містити: хоч одну цифру, велику букву, малу букву, лише латинські букви";
+    content: "the password must contain: at least one number, an uppercase letter, a lowercase letter, only Latin letters";
     text-align: center;
     display: block;
     width: 100%;
@@ -475,31 +475,31 @@ input.ng-dirty.ng-valid:not(.non-check) {
 }
 .tag2 {
   &::after {
-    content: "паролі мають бути ідентичними!";
+    content: "passwords must be identical!";
   }
 }
 .tag3 {
   &::after {
-    content: "Вкажіть Вашу стать";
+    content: "enter your gender";
   }
 }
 .tag4 {
   &::after {
-    content: "Заповніть будь-ласка поля";
+    content: "Please fill in the fields";
   }
 }
 .tag5 {
   &::after {
-    content: "Дані введено не вірно";
+    content: "The data entered is incorrect";
   }
 }
 .tag6 {
   &::after {
-    content: "ім'я має містити тільки латинські букви";
+    content: "the name must contain only Latin letters";
   }
 }
 .tag7 {
   &::after {
-    content: "email має містити символ @ та .";
+    content: "email must contain @ and .";
   }
 }
